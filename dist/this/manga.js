@@ -287,7 +287,7 @@ $(document).ready(function() {
             dataType: "JSON",
             type : 'GET',
             url: 'process/add_manga.php',
-            data: {url:$("#link_manga").val()},
+            data: {url:$("#link_manga").val(), id_user:$("#id_user").attr('id_user')},
             success: function(data) {
                 if (data['isExist'] == 'true') {
                     $('#btn_loading').addClass('hidden');
