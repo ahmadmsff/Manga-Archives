@@ -1,0 +1,149 @@
+.form-control {
+    background: #f5f5f5;
+}
+.alert {
+    border-radius: 0px;
+}
+.hidden {
+    display: none;
+}
+.main-header .sidebar-toggle:before {
+    content: none;
+}
+
+.icon {
+    margin-left: 10px;
+}
+#display-harga{
+    background: #222d32;
+    color: #FFFFFF;
+    font-size: 50px;
+    font-weight: bold;
+    text-align: right;
+    height: 80px;
+    border-radius: 3px;
+}
+.table td.fit, 
+.table th.fit {
+    white-space: nowrap;
+    width: 1%;
+}
+
+.error-page {
+    margin-top: 10%;
+}
+
+.tester {
+    border: solid 1px red;
+}
+
+.img {
+    object-fit: cover
+}
+#loadManga {
+    margin-bottom: 20px;
+}
+
+#btn-load-more {
+    margin-top: 15px;
+}
+
+.manga-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.manga-card {
+    width: 126px;
+    margin-right: 5px;
+    margin-left: 5px;
+    margin: 0px 5px 5px 5px;
+    cursor: pointer;
+}
+.manga-card:hover {
+    -webkit-box-shadow: 0px 2px 5px 1px rgba(48,111,145,1);
+    -moz-box-shadow: 0px 2px 5px 1px rgba(48,111,145,1);
+    box-shadow: 0px 2px 5px 1px rgba(48,111,145,1);
+}
+
+.img-manga{
+    position: relative;
+    color: #FFFFFF;
+}
+
+#img-manga {
+    width: 127px;
+    height: 179px;
+    object-fit: cover
+}
+
+.text-type {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    background: #3c8dbc;
+    padding: 0px 5px 0px 5px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.text-new-chapter {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #f56954;
+    padding: 0px 5px 0px 5px;
+    font-size: 12px;
+    font-weight: bold;
+}
+.manga-title {
+    font-weight: bold;
+    width: 126px;
+    margin-top: 5px;
+    padding: 0px 2px 0px 5px;
+}
+
+.manga-info {
+    margin-top: 5px;
+    padding: 0px 2px 0px 5px;
+}
+
+.text-white {
+    color: #FFFFFF !important;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd) {
+    background-color: #357ca5;
+}
+.table>tbody>tr>td, .table>tfoot>tr>td {
+    border-top: none;
+}
+
+#btnSearch:hover {
+    cursor: pointer;
+}
+
+@media (min-width: 768px) {
+    .dl-horizontal dt {
+        width: 110px;
+        text-align: left;
+    }
+    .dl-horizontal dd {
+        margin-left: 0px;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+    .manga-card {
+        width: 145px;
+    }
+    .manga-title {
+        width: 145px;
+    }
+    
+    #img-manga {
+        width: 145px;
+        height: 192px;
+    }
+    
+}
