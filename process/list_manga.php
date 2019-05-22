@@ -72,13 +72,17 @@ foreach($sql as $data) {
     
     $type = $data['type'];
 
-    $queryCH = "SELECT user_history.id_manga, MAX(user_history.chapter) AS chapter, user_history.read_date FROM user_history INNER JOIN manga ON user_history.id_manga=manga.id_manga WHERE user_history.id_manga='$id'";
+    $queryCH = "SELECT user_history.id_manga, MAX(FORMAT(user_history.chapter,1)) AS chapter, user_history.read_date FROM user_history INNER JOIN manga ON user_history.id_manga=manga.id_manga WHERE user_history.id_manga='$id'";
     $sqlCH = mysqli_query($connect, $queryCH);
     $dataCH = mysqli_fetch_assoc($sqlCH);
     if ($dataCH['chapter'] == null || $dataCH['chapter'] == "") {
         $chapter = 0;
     } else {
-        $chapter = $dataCH['chapter'];
+        if (substr($dataCH['chapter'], strpos($dataCH['chapter'], '.') + 1) == 0 || substr($dataCH['chapter'], strpos($dataCH['chapter'], '.') + 1) == "0") {
+            $chapter = substr($dataCH['chapter'],0, -2);
+        } else {
+            $chapter = $dataCH['chapter'];
+        }
     }
     if ($dataCH['read_date'] == null || $dataCH['read_date'] == "") {
         $read_date = "Not Read";

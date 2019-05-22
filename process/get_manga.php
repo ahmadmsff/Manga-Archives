@@ -68,8 +68,37 @@ function get_timeago( $ptime )
 }
 
 $chapter = "";
+$resume = '';
+
+$query = "SELECT chapter, status FROM user_history WHERE id_user='$id_user' AND id_manga='$id_manga'";
+$sql = mysqli_query($connect, $query);
+$cek = mysqli_num_rows($sql);
+if($cek > 0) {
+    $qn = "SELECT chapter FROM user_history WHERE id_user='$id_user' AND id_manga='$id_manga' ORDER BY chapter DESC LIMIT 1";
+    $sn = mysqli_query($connect,$qn);
+    $get = mysqli_fetch_assoc($sn);
+    $last = $get['chapter'];
+    $qn = "SELECT chapter FROM chapter WHERE id_manga='$id_manga' ORDER BY chapter ASC";
+    $sn = mysqli_query($connect,$qn);
+    $ch = array();
+    foreach($sn as $row) {
+        array_push($ch, $row['chapter']);
+    }
+    $index_now =  array_search($last, $ch);
+    
+    $resume = '<a href="viewer.php?id_manga='.$id_manga.'&chapter='.$ch[$index_now+1].'" target="_blank" class="btn btn-xs btn-success pull-right">RESUME</a>';
+} else {
+    $qn = "SELECT chapter FROM chapter WHERE id_manga='$id_manga' ORDER BY chapter ASC LIMIT 1";
+    $sn = mysqli_query($connect,$qn);
+    $get = mysqli_fetch_assoc($sn);
+    $first = $get['chapter'];
+    $resume = '<a href="viewer.php?id_manga='.$id_manga.'&chapter='.$first.'" target="_blank" class="btn btn-xs btn-success pull-right">READ</a>';
+}
+
+
 $query = "SELECT * FROM chapter WHERE id_manga='$id_manga' ORDER BY chapter DESC";
 $sql = mysqli_query($connect, $query);
+
 foreach($sql as $dat) {
     $q = "SELECT chapter, status FROM user_history WHERE id_user='$id_user' AND id_manga='$id_manga' AND chapter LIKE '".$dat['chapter']."'";
     $s = mysqli_query($connect, $q);
@@ -78,11 +107,10 @@ foreach($sql as $dat) {
     if ($cek > 0) {
         $stat= mysqli_fetch_assoc($s);
         if($stat['status'] == '0' || $stat['status'] == 0) {
-            $download = ' <button class="btn btn-xs btn-success" id="down-'.$dat['chapter'].'" onclick="downloadManga(' . $dat['chapter'] .')" id_manga="'.$id_manga.'" source="'.$dat['source'].'"><i class="fas fa-download"></i></button><a class="btn btn-xs btn-success hidden" id="view-'.$dat['chapter'].'" href="viewer.php?id_manga='.$id_manga.'&chapter='.$dat['chapter'].'" target="_blank"><i class="fas fa-eye"></i></a><button class="btn btn-xs btn-success hidden" id="btnLoad-'.$dat['chapter'].'" disabled><i class="fas fa-spinner fa-pulse"></i></button>';
+            $download = ' <button class="btn btn-xs btn-success" id="down-'.$stat['chapter'].'" onclick="downloadManga(' . $dat['chapter'] .')" id_manga="'.$id_manga.'" source="'.$dat['source'].'"><i class="fas fa-download"></i></button><a class="btn btn-xs btn-success hidden" id="view-'.$dat['chapter'].'" href="viewer.php?id_manga='.$id_manga.'&chapter='.$dat['chapter'].'" target="_blank"><i class="fas fa-eye"></i></a><button class="btn btn-xs btn-success hidden" id="btnLoad-'.$dat['chapter'].'" disabled><i class="fas fa-spinner fa-pulse"></i></button>';
         } else {
             $download = ' <a class="btn btn-xs btn-success" href="viewer.php?id_manga='.$id_manga.'&chapter='.$dat['chapter'].'" target="_blank"><i class="fas fa-eye"></i></a>';
         }
-
         $chap = "Chapter " . $dat['chapter'];
     } else {
         $download = ' <button class="btn btn-xs btn-success" id="down-'.$dat['chapter'].'" onclick="downloadManga(' . $dat['chapter'] .')" id_manga="'.$id_manga.'" source="'.$dat['source'].'"><i class="fas fa-download"></i></button><a class="btn btn-xs btn-success hidden" id="view-'.$dat['chapter'].'" href="viewer.php?id_manga='.$id_manga.'&chapter='.$dat['chapter'].'" target="_blank"><i class="fas fa-eye"></i></a><button class="btn btn-xs btn-success hidden" id="btnLoad-'.$dat['chapter'].'" disabled><i class="fas fa-spinner fa-pulse"></i></button>';
@@ -136,7 +164,7 @@ $result = '<div class="col-xs-5 col-md-2 ">
                 <div class="box box-solid">
                     <div class="box-header with-border bg-primary">
                     <h3 class="box-title text-white">Sinopsis</h3>
-                    <button class="btn btn-xs btn-success pull-right">RESUME</button>
+                    '.$resume.'
                     </div>
                     <div class="box-body bg-primary">
                         '.base64_decode($description).'

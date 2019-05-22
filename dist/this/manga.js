@@ -54,13 +54,14 @@ $(document).ready(function() {
             data: {id_user:$("#id_user").attr('id_user'), page:$("#btn-load-more").attr('page')},
             success: function(data) {
                 $("#btn-load-more").html("LOAD MORE");
+                console.log(data);
                 if (data.result.length > 0) {
                     var i;
                     for (i = 0; i< data.result.length; i++) {
                         var manga = data.result[i];
                         var id = manga.id_manga;
                         var type = manga.type;
-                        var chapter = Math.trunc(parseFloat(manga.chapter));
+                        var chapter = manga.chapter;
                         var not_read = manga.not_read;
                         var new_chapter = not_read;
                         var title = manga.title;
@@ -79,9 +80,7 @@ $(document).ready(function() {
                         result += "<\/div>";
                         result += "<div class=\"manga-title\">" + title + "<\/div>";
                         result += "<div class=\"manga-info\">";
-                        if (chapter != 0) {
                         result += "<span id=\"last-chapter\">Ch." + chapter + "<\/span>";
-                        }
                         result += "<span id=\"last-read\" class=\"pull-right\">" + read_date + "<\/span>";
                         result += "<\/div>";
                         result += "<\/div>";
